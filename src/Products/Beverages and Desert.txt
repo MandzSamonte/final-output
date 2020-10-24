@@ -1,0 +1,4 @@
+Coke Float,25
+Chocolate Sundae,25
+Cone Twirl Krunchy Chocolate,10
+Cone Twirl Vanilla,10

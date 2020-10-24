@@ -1,0 +1,4 @@
+Buttered Corn,36
+Mashed Potato,36
+Jolly Crispy Fries,44
+Creamy Macaroni Soup,44
