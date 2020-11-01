@@ -139,10 +139,10 @@ class Main extends JFrame {
         btnPrint.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RecieptFrame recieptFrame = new RecieptFrame();
-                RecieptFrame.receiptTableModel.setRowCount(0);
+                Reciept recieptFrame = new Reciept();
+                Reciept.receiptTableModel.setRowCount(0);
                 for(int i = 0; i < customerTableModel.getRowCount(); i++){
-                    RecieptFrame.receiptTableModel.addRow(customerTableModel.getDataVector().elementAt(i));
+                    Reciept.receiptTableModel.addRow(customerTableModel.getDataVector().elementAt(i));
                 }
                 customerTableModel.setRowCount(0);
                 TOTAL = 0;
@@ -196,71 +196,6 @@ class Main extends JFrame {
         add(printContainer, gridBagConstraints);
     }
 
-
-    public static class RecieptFrame extends JFrame {
-        public static DefaultTableModel receiptTableModel = new DefaultTableModel();
-
-        public RecieptFrame() {
-            setVisible(false);
-            setSize(400, 700);
-            setDefaultCloseOperation(HIDE_ON_CLOSE);
-
-            Container container = getContentPane();
-
-            // Receipt Header
-            JTextPane headerText = new JTextPane();
-            headerText.setText(
-                    "\nJOLLIBEE" +
-                            "\n==Customers Copy==" +
-                            "\nUnknown Place, Dasmariñas City, Cavite" +
-                            "\nTel: ***********" +
-                            "\nCounter #: " +
-                            "\n******************************************\n"
-            );
-            StyledDocument headerDoc = headerText.getStyledDocument();
-            SimpleAttributeSet headerCenter = new SimpleAttributeSet();
-            StyleConstants.setAlignment(headerCenter, StyleConstants.ALIGN_CENTER);
-            headerDoc.setParagraphAttributes(0, headerDoc.getLength(), headerCenter, false);
-
-
-            //Receipt Footer
-            JTextPane footerText = new JTextPane();
-            footerText.setText(
-                    "\n******************************************" +
-                            "\nThis serves as your Official Receipt." +
-                            "\nThank you, and please come again" +
-                            "\nFor feedback, please call us at" +
-                            "\nTel: ***********" +
-                            "\nEmail: feedback.sample@sample.com" +
-                            "\nVisit us also at www.jollibee.com.ph\n"
-            );
-            StyledDocument footerDoc = footerText.getStyledDocument();
-            SimpleAttributeSet footerCenter = new SimpleAttributeSet();
-            StyleConstants.setAlignment(footerCenter, StyleConstants.ALIGN_CENTER);
-            footerDoc.setParagraphAttributes(0, footerDoc.getLength(), footerCenter, false);
-
-
-            //Main Receipt
-            JPanel mainReceiptPanel = new JPanel();
-            mainReceiptPanel.setBackground(Color.white);
-            mainReceiptPanel.setLayout(new BoxLayout(mainReceiptPanel, BoxLayout.Y_AXIS));
-
-            String[] receiptColumnIdentifiers = {"Name", "Total"};
-            receiptTableModel.setColumnIdentifiers(receiptColumnIdentifiers);
-
-            String[] rowData = {"Sample", "2"};
-            receiptTableModel.addRow(rowData);
-
-            JTable receiptTable = new JTable(receiptTableModel);
-
-            mainReceiptPanel.add(new JScrollPane(receiptTable));
-            mainReceiptPanel.add(new JLabel("TOTAL: " + TOTAL));
-
-            container.add(headerText, BorderLayout.NORTH);
-            container.add(mainReceiptPanel, BorderLayout.CENTER);
-            container.add(footerText, BorderLayout.SOUTH);
-        }
-    }
 
     public static void main(String args[]){
         Login login = new Login();
