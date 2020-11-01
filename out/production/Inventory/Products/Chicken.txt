@@ -1,0 +1,4 @@
+Chicken Joy with Jolly Spaghetti,109
+Chicken Joy with Fries,116
+Chicken Joy with Burger Steak,149
+Chicken Joy with Burger Steak and Half Spaghetti,165

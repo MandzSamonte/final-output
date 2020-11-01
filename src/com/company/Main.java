@@ -1,6 +1,5 @@
 package com.company;
 
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -29,18 +28,23 @@ class Main extends JFrame {
     public static DefaultTableModel customerTableModel = new DefaultTableModel();
 
     public Main(){
-        setContentPane(new JLabel(new ImageIcon("/Users/johnmandysamonte/Library/Preferences/IdeaIC2019.3/scratches/FinalOutput/FinalOutput-master/Backgrounds/b2.png")));
+        // setContentPane(new JLabel(new ImageIcon("/Users/johnmandysamonte/Library/Preferences/IdeaIC2019.3/scratches/FinalOutput/FinalOutput-master/Backgrounds/b2.png")));
         setVisible(false);
         setSize(1000,600);
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBackground(Color.decode("#edf2f4"));
 
+        //Components
         JComboBox cbbProductType = new JComboBox();
+        JLabel lblOrders = new JLabel("Orders:");
+
+
 
         lblTotal.setForeground(Color.white);
 
-        JLabel lblOrders = new JLabel("Orders:");
+
         lblOrders.setForeground(Color.white);
 
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -123,8 +127,16 @@ class Main extends JFrame {
         setLayout(gridBagLayout);
 
         JPanel printContainer = new JPanel();
-        JButton printReceipt = new JButton("Print Receipt");
-        printReceipt.addActionListener(new ActionListener() {
+
+
+        JButton btnPrint = new JButton("Print Receipt");
+        btnPrint.setMargin(new Insets(10, 5, 10, 5));
+        btnPrint.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnPrint.setBackground(Color.red);
+        btnPrint.setBorderPainted(false);
+        btnPrint.setOpaque(true);
+        btnPrint.setForeground(Color.decode("#edf2f4"));
+        btnPrint.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 RecieptFrame recieptFrame = new RecieptFrame();
@@ -141,22 +153,22 @@ class Main extends JFrame {
         });
         printContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
         printContainer.setOpaque(false);
-        printContainer.add(printReceipt);
+        printContainer.add(btnPrint);
         printContainer.add(lblTotal);
 
         JButton voidButton = new JButton("Void");
+        voidButton.setPreferredSize(new Dimension(100, 40));
         voidButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(auth == "admin"){
-                    customerTableModel.setRowCount(0);
+                    customerTableModel.setRowCount (0);
                     TOTAL = 0;
                     lblTotal.setText(Integer.toString(TOTAL));
                 }else{
-                    VoidItem voidItem = new VoidItem();
-                    voidItem.setVisible(true);
+                    Void voidFrame = new Void();
+                    voidFrame.setVisible(true);
                 }
-
             }
         });
 
@@ -182,71 +194,6 @@ class Main extends JFrame {
         add(new JScrollPane(tblCustomerOrder), gridBagConstraints);
         gridBagConstraints.gridy = 2;
         add(printContainer, gridBagConstraints);
-    }
-
-    public static class VoidItem extends JFrame {
-        public VoidItem() {
-            setContentPane(new JLabel(new ImageIcon("/Users/johnmandysamonte/Library/Preferences/IdeaIC2019.3/scratches/FinalOutput/FinalOutput-master/Backgrounds/v1.png")));
-            setResizable(false);
-            setVisible(false);
-            setSize(600, 400);
-            setLocationRelativeTo(null);
-            setDefaultCloseOperation(HIDE_ON_CLOSE);
-            setLayout(new GridBagLayout());
-
-            // Components
-            JLabel lblUserName = new JLabel("Username: ");
-            JTextField inpUsername = new JTextField();
-            inpUsername.setPreferredSize(new Dimension(300, 40));
-            lblUserName.setLabelFor(inpUsername);
-
-            JLabel lblPassword = new JLabel("Password: ");
-            JPasswordField inpPassword = new JPasswordField();
-            inpPassword.setPreferredSize(new Dimension(300, 40));
-            lblPassword.setLabelFor(inpPassword);
-
-            JButton SubmitButton = new JButton("Void");
-            SubmitButton.setPreferredSize(new Dimension(300, 40));
-
-            // Functions
-            SubmitButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(!inpUsername.getText().isEmpty() && !inpPassword.getText().isEmpty()){
-                        try {
-                            Scanner adminList = new Scanner(new FileReader("/Users/johnmandysamonte/Library/Preferences/IdeaIC2019.3/scratches/FinalOutput/adminList.txt"));
-                            while(adminList.hasNext()){
-                                String name = adminList.next();
-                                String password = adminList.next();
-
-                                if(name.equals(inpUsername.getText()) && password.equals(new String(inpPassword.getPassword()))){
-
-                                    Main.customerTableModel.setRowCount(0);
-                                    Main.TOTAL = 0;
-                                    Main.lblTotal.setText(Integer.toString(Main.TOTAL));
-                                    break;
-                                }
-                            }
-                        } catch (FileNotFoundException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            });
-
-            // Layouts
-            GridBagConstraints gridBagConstraints = new GridBagConstraints();
-            gridBagConstraints.gridy = 0;
-            add(lblUserName, gridBagConstraints);
-            gridBagConstraints.gridy = 1;
-            add(inpUsername, gridBagConstraints);
-            gridBagConstraints.gridy = 2;
-            add(lblPassword, gridBagConstraints);
-            gridBagConstraints.gridy = 3;
-            add(inpPassword, gridBagConstraints);
-            gridBagConstraints.gridy = 4;
-            add(SubmitButton, gridBagConstraints);
-        }
     }
 
 
