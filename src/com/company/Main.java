@@ -3,9 +3,6 @@ package com.company;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +12,6 @@ import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Scanner;
 
 class Main extends JFrame {
 
@@ -40,7 +36,13 @@ class Main extends JFrame {
         JComboBox cbbProductType = new JComboBox();
         JLabel lblOrders = new JLabel("Orders:");
 
-
+        JButton btnInventory = new JButton("Show Inventory");
+        btnInventory.setMargin(new Insets(10, 5, 10, 5));
+        btnInventory.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnInventory.setBackground(Color.red);
+        btnInventory.setBorderPainted(false);
+        btnInventory.setOpaque(true);
+        btnInventory.setForeground(Color.decode("#edf2f4"));
 
         lblTotal.setForeground(Color.white);
 
@@ -157,7 +159,12 @@ class Main extends JFrame {
         printContainer.add(lblTotal);
 
         JButton voidButton = new JButton("Void");
-        voidButton.setPreferredSize(new Dimension(100, 40));
+        voidButton.setMargin(new Insets(10, 5, 10, 5));
+        voidButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        voidButton.setBackground(Color.red);
+        voidButton.setBorderPainted(false);
+        voidButton.setOpaque(true);
+        voidButton.setForeground(Color.decode("#edf2f4"));
         voidButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,11 +178,23 @@ class Main extends JFrame {
                 }
             }
         });
+        btnInventory.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(auth == "admin") {
+                    Items itemsFrame = new Items();
+                    itemsFrame.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "You must be an admin to access the items", "", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
 
         JPanel addItemContainer = new JPanel();
         addItemContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
         addItemContainer.setOpaque(false);
         addItemContainer.add(voidButton);
+        addItemContainer.add(btnInventory);
 
         // Layout
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
